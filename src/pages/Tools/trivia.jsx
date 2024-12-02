@@ -13,7 +13,7 @@ const Trivia = () => {
   // Fetch questions from the backend
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/questions?length=${questionCount}`)
+      .get('/api/questions?length=${questionCount}')
       .then((response) => {
         setQuestions(response.data);
       })
@@ -48,7 +48,7 @@ const Trivia = () => {
   const shareResults = () => {
     const score = calculateScore();
     const text = `I scored ${score} out of ${questions.length} in the Security Trivia! Can you beat my score?`;
-    const url = "https://your-website-link.com"; // Replace with your actual link
+    const url = "http://localhost:5173"; // Replace with your actual link
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         text

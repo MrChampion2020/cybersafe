@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import OAuth from "../components/OAuth";
+import logo from "../assets/logo.png"
 function SignUp() {
     const [formData, setFormData] = useState({});
     const [errorMessage, setErrorMessage] = useState(null);
@@ -42,10 +43,11 @@ function SignUp() {
                 {/* left side */}
                 <div className="flex-1">
                     <Link to="/" className=" font-bold dark:text-white text-4xl">
-                        <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-                            {"Prince's"}
-                        </span>
-                        Blog
+                       <img src={logo} alt="" 
+                       style={{
+                        width: "100px",
+                        height: "80px"
+                       }}/>
                     </Link>
                     <p className="text-sm mt-5">
                         This is demo project. You can sign up with your email and password

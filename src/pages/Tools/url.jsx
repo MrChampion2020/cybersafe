@@ -24,7 +24,7 @@ const Url = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/scan-url`,
+        '/api/scan-url',
         { url }
       );
       setResult(response.data);
@@ -42,7 +42,7 @@ const Url = () => {
       maxWidth: "600px",
       width: "90%",
       margin: "auto",
-      backgroundColor: "#fff",
+      // backgroundColor: "#fff",
       borderRadius: "8px",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       textAlign: "center",
@@ -57,11 +57,12 @@ const Url = () => {
       display: "flex",
       flexDirection: "column",
       gap: "15px",
+
     },
     input: {
       padding: "10px",
       fontSize: "1rem",
-      border: "1px solid #ddd",
+      border: "1px solid blue",
       borderRadius: "5px",
       width: "100%",
     },
@@ -69,8 +70,8 @@ const Url = () => {
       padding: "10px",
       fontSize: "1rem",
       color: "#fff",
-      backgroundColor: "#007BFF",
-      border: "none",
+      // backgroundColor: "#007BFF",
+      border: "1px solid blue",
       borderRadius: "5px",
       cursor: "pointer",
       transition: "background 0.3s",
@@ -94,7 +95,7 @@ const Url = () => {
       fontWeight: "bold",
     },
     matches: {
-      backgroundColor: "#f4f4f4",
+      // backgroundColor: "white",
       padding: "10px",
       borderRadius: "5px",
       overflow: "auto",
@@ -116,13 +117,19 @@ const Url = () => {
     <div style={styles.container}>
       <h1 style={styles.title}>Secure URL Scanner</h1>
       <div style={{ ...styles.inputContainer, ...styles.responsiveContainer }}>
+       
         <input
           type="text"
           placeholder="Enter URL"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          style={{ ...styles.input, ...styles.responsiveInput }}
+          style={{ ...styles.input, ...styles.responsiveInput, 
+            // backgroundColor: "none"
+            color: "blue"
+    
+          }}
         />
+
         <button
           onClick={scanUrl}
           style={styles.button}

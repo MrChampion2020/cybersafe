@@ -22,6 +22,12 @@ import ScrollToTop from './components/ScrollToTop';
 import Search from './pages/Search';
 import UpdatePost from "./pages/UpdatePost";
 
+
+import SecurityPersonnelSignIn from './components/SecurityPersonnelSignIn';
+import SecurityPersonnelSignUp from './components/SecurityPersonnelSignUp';
+import SecurityDashboard from './components/SecurityDashboard';
+import ChatInbox from './components/ChatInbox';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -48,6 +54,10 @@ export default function App() {
         </Route>
         <Route path="/projects" element={<Projects />} ></Route>
         <Route path='/post/:postSlug' element={<PostPage />} />
+        <Route path='/security-sign-in' element={<SecurityPersonnelSignIn />} />
+        <Route path='/security-sign-up' element={<SecurityPersonnelSignUp />} />
+        <Route path='/security-dashboard' element={<SecurityDashboard />} />
+        <Route path='/chat/:chatId' element={<ChatInbox />} />
       </Routes>
       <Footer />
     </BrowserRouter>

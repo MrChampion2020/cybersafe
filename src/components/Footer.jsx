@@ -4,7 +4,7 @@ import { BsFacebook, BsInstagram, BsTwitterX, BsGithub, BsDribbble, } from 'reac
 import logo from "../assets/logo.png"
 export default function FooterCom() {
     return (
-        <Footer container className='border border-t-8 border-teal-500'>
+        <Footer container className='border border-t-1 border-teal-500'>
             <div className='w-full max-w-7xl mx-auto'>
                 <div className='grid w-full justify-between sm:flex md:grid-cols-1'>
                     <div className='mt-5'
@@ -80,7 +80,7 @@ export default function FooterCom() {
                 <div className='w-full sm:flex sm:items-center sm:justify-between'>
                     <Footer.Copyright
                         href='#'
-                        by="Cy"
+                        by="Cyber Safe"
                         year={new Date().getFullYear()}
                     />
                     <div className="flex gap-6 sm:mt-0 mt-4 sm:justify-center">

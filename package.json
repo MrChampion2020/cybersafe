@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
     "@reduxjs/toolkit": "^2.2.3",
     "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.7.8",
+    "babel-loader": "^9.2.1",
+    "cors": "^2.8.5",
     "firebase": "^10.11.0",
     "flowbite-react": "^0.7.6",
     "moment": "^2.30.1",
@@ -27,7 +32,9 @@
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tailwind-scrollbar": "^3.1.0",
-    "validator": "^13.12.0"
+    "validator": "^13.12.0",
+    "webpack": "^5.96.1",
+    "webpack-dev-server": "^5.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

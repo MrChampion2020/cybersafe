@@ -64,7 +64,7 @@ const PasswordGenerator = () => {
             border: '1px solid #ccc',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            backgroundColor: '#f9f9f9',
+            // backgroundColor: '#f9f9f9',
             gap: '10px',
         }}>
             <h2>Password Generator</h2>
@@ -113,9 +113,9 @@ const PasswordGenerator = () => {
 
             <button onClick={generatePasswords} style={{
                 padding: '10px 20px',
-                backgroundColor: '#4CAF50',
+                backgroundColor: '#1C39BB',
                 color: 'white',
-                border: 'none',
+                border: '1px solid white',
                 borderRadius: '5px',
                 cursor: 'pointer'
             }}>Generate Passwords</button>
@@ -133,7 +133,7 @@ const PasswordGenerator = () => {
                             padding: '10px',
                             border: '1px solid #ddd',
                             borderRadius: '5px',
-                            backgroundColor: '#fff',
+                            // backgroundColor: '#fff',
                             textAlign: 'center',
                             wordBreak: 'break-word',
                         }}>
@@ -144,7 +144,7 @@ const PasswordGenerator = () => {
                         padding: '10px',
                         border: '1px solid #ddd',
                         borderRadius: '5px',
-                        backgroundColor: '#fff',
+                        // backgroundColor: '#fff',
                         textAlign: 'center',
                     }}>Your passwords will appear here</div>}
             </div>

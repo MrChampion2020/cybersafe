@@ -14,7 +14,7 @@ function Scanner() {
     setLoading(true);
     setScanResult(null);
     try {
-      const response = await axios.post("http://localhost:5000/api/scan-email", { email, links: emailLinks });
+      const response = await axios.post("http://localhost:3000/api/scan-email", { email, links: emailLinks });
       setScanResult(response.data);
     } catch (error) {
       console.error("Scan failed:", error);
