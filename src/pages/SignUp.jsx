@@ -3,6 +3,9 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import OAuth from "../components/OAuth";
 import logo from "../assets/logo.png"
+
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 function SignUp() {
     const [formData, setFormData] = useState({});
     const [errorMessage, setErrorMessage] = useState(null);
@@ -11,6 +14,9 @@ function SignUp() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
     };
+
+const api = API_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.username || !formData.email || !formData.password) {
@@ -19,7 +25,7 @@ function SignUp() {
         try {
             setLoading(true);
             setErrorMessage(null);
-            const res = await fetch("/api/auth/signup", {
+            const res = await fetch(`${api}/api/auth/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

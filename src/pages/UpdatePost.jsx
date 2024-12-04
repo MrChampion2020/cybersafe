@@ -13,6 +13,8 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 export default function UpdatePost() {
     const [file, setFile] = useState(null);
@@ -27,8 +29,11 @@ export default function UpdatePost() {
 
     useEffect(() => {
         try {
+
+            const api = API_URL;
+
             const fetchPost = async () => {
-                const res = await fetch(`/api/post/getposts?postId=${postId}`);
+                const res = await fetch(`${api}/api/post/getposts?postId=${postId}`);
                 const data = await res.json();
                 if (!res.ok) {
                     console.log(data.message);
@@ -87,7 +92,7 @@ export default function UpdatePost() {
         e.preventDefault();
         try {
             const res = await fetch(
-                `/api/post/updatepost/${formData._id}/${currentUser._id}`,
+                `${api}/api/post/updatepost/${formData._id}/${currentUser._id}`,
                 {
                     method: "PUT",
                     headers: {
@@ -104,7 +109,7 @@ export default function UpdatePost() {
 
             if (res.ok) {
                 setPublishError(null);
-                navigate(`/post/${data.slug}`);
+                navigate(`${api}/post/${data.slug}`);
             }
         } catch (error) {
             setPublishError("Something went wrong");

@@ -2,7 +2,12 @@ import { Button } from 'flowbite-react';
 import pics from "../assets/images.jpg"
 export default function CallToAction() {
   return (
-    <div className='flex flex-col sm:flex-row p-3 border border-teal-500 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center'>
+    <div className='flex flex-col sm:flex-row p-3 border border-500 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center'
+    // style={{
+    //     backgroundColor: "#f2f0ef",
+    //     margin: "auto"
+    // }}
+    >
         <div className="flex-1 justify-center flex flex-col">
             <h2 className='text-2xl'>
                 Want Live Pro Help ?
@@ -16,7 +21,10 @@ export default function CallToAction() {
                 </a>
             </Button>
         </div>
-        <div className="p-7 flex-1">
+        <div className="p-7 flex-1"
+        style={{
+            objectFit: "cover",
+        }}>
             <img src={pics} />
         </div>
     </div>

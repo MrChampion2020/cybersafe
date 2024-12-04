@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { isURL } from "validator";
+import RealVulnerabilityScanner from './scanner';
+
+
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 const Url = () => {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+
+  const api = API_URL;
 
   const scanUrl = async () => {
     if (!url) {
@@ -24,7 +32,7 @@ const Url = () => {
 
     try {
       const response = await axios.post(
-        '/api/scan-url',
+        `${api}/api/scan-url`,
         { url }
       );
       setResult(response.data);
@@ -115,6 +123,7 @@ const Url = () => {
 
   return (
     <div style={styles.container}>
+
       <h1 style={styles.title}>Secure URL Scanner</h1>
       <div style={{ ...styles.inputContainer, ...styles.responsiveContainer }}>
        
@@ -143,6 +152,10 @@ const Url = () => {
         >
           {loading ? "Scanning..." : "Scan URL"}
         </button>
+        <main className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Real-time Domain Vulnerability Scanner</h1>
+      <RealVulnerabilityScanner />
+    </main>
       </div>
       {error && <p style={styles.error}>{error}</p>}
       {result && (

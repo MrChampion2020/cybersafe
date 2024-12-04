@@ -4,13 +4,17 @@ import { useEffect, useState } from 'react';
 import PostCard from '../components/PostCard';
 import img1 from "../assets/pass.jpeg"
 import img2 from "../assets/email.jpg"
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Home() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
+
+      const api = API_URL;
+
         const fetchPosts = async () => {
-            const res = await fetch('/api/post/getPosts');
+            const res = await fetch(`${api}/api/post/getPosts`);
             const data = await res.json();
             setPosts(data.posts);
         };

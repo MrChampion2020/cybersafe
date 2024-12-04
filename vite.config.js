@@ -6,8 +6,9 @@ export default defineConfig({
   server:{
     proxy:{
       '/api':{
-        target:'http://localhost:5000',
+        target:'https://cybersafeapi.onrender.com',
         secure:false,
+        changeOrigin: true,
       },
     },
   },
@@ -15,4 +16,7 @@ export default defineConfig({
 
   
 })
+
+// // https://cybersafeapi.onrender.comhttp://localhost:5000
+
 

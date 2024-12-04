@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -10,11 +12,13 @@ function DashPosts() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState('');
-  
+
+  const api = API_URL;
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+        const res = await fetch(`${api}/api/post/getposts?userId=${currentUser._id}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -35,7 +39,7 @@ function DashPosts() {
     const startIndex = userPosts.length;
     try {
       const res = await fetch(
-        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+        `${api}/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
       );
       const data = await res.json();
       if (res.ok) {
@@ -53,7 +57,7 @@ function DashPosts() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+        `${api}/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
           method: 'DELETE',
         }
@@ -104,7 +108,7 @@ function DashPosts() {
                   <Table.Cell>
                     <Link
                       className='font-medium text-gray-900 dark:text-white'
-                      to={`/post/${post.slug}`}
+                      to={`${api}/post/${post.slug}`}
                     >
                       {post.title}
                     </Link>
@@ -124,7 +128,7 @@ function DashPosts() {
                   <Table.Cell>
                     <Link
                       className='text-teal-500 hover:underline'
-                      to={`/update-post/${post._id}`}
+                      to={`${api}/update-post/${post._id}`}
                     >
                       <span>Edit</span>
                     </Link>

@@ -10,6 +10,9 @@ import {
 import OAuth from "../components/OAuth.jsx";
 import logo from "../assets/logo.png"
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+
 function SignIn() {
     const [formData, setFormData] = useState({});
     const { loading, error: errorMessage } = useSelector((state) => state.user);
@@ -18,6 +21,9 @@ function SignIn() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
     };
+
+const api = API_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.email || !formData.password) {
@@ -25,7 +31,7 @@ function SignIn() {
         }
         try {
             dispatch(signInStart());
-            const res = await fetch("/api/auth/signin", {
+            const res = await fetch(`${api}/api/auth/signin`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

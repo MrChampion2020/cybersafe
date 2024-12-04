@@ -5,6 +5,8 @@ import { HiArrowSmRight, HiUser, HiDocumentText, HiOutlineUserGroup, HiAnnotatio
 import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 function DashSidebar() {
   const location = useLocation();
@@ -20,9 +22,11 @@ function DashSidebar() {
     // console.log(tabFromUrl);
   }, [location.search]);
 
+const api = API_URL;
+
   const handleSignOut = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
+      const res = await fetch(`${api}/api/user/signout`, {
         method: 'POST',
       });
       const data = await res.json();

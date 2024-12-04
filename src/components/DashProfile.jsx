@@ -23,6 +23,8 @@ import {
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -37,7 +39,7 @@ function DashProfile() {
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const dispatch = useDispatch();
-
+  const api = API_URL;
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -103,7 +105,7 @@ function DashProfile() {
     }
     try {
       dispatch(updateStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`${api}/api/user/update/${currentUser._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +130,7 @@ function DashProfile() {
     setShowModal(false);
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`${api}/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -145,7 +147,7 @@ function DashProfile() {
   
   const handleSignOut = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
+      const res = await fetch(`${api}/api/user/signout`, {
         method: 'POST',
       });
       const data = await res.json();

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 export default function CommentSection({ postId }) {
@@ -15,13 +16,15 @@ export default function CommentSection({ postId }) {
     const [commentToDelete, setCommentToDelete] = useState(null);
     const navigate = useNavigate();
 
+    const api = API_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (comment.length > 200) {
             return;
         }
         try {
-            const res = await fetch('/api/comment/create', {
+            const res = await fetch(`${api}/api/comment/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +48,7 @@ export default function CommentSection({ postId }) {
     useEffect(() => {
         const getComments = async () => {
             try {
-                const res = await fetch(`/api/comment/getPostComments/${postId}`);
+                const res = await fetch(`${api}/api/comment/getPostComments/${postId}`);
                 if (res.ok) {
                     const data = await res.json();
                     setComments(data);
@@ -62,7 +65,7 @@ export default function CommentSection({ postId }) {
                 navigate('/sign-in');
                 return;
             }
-            const res = await fetch(`/api/comment/likeComment/${commentId}`, {
+            const res = await fetch(`${api}/api/comment/likeComment/${commentId}`, {
                 method: 'PUT',
             });
             if (res.ok) {
@@ -97,7 +100,7 @@ export default function CommentSection({ postId }) {
                 navigate('/sign-in');
                 return;
             }
-            const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
+            const res = await fetch(`${api}/api/comment/deleteComment/${commentId}`, {
                 method: 'DELETE',
             });
             if (res.ok) {

@@ -406,19 +406,20 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggletheme } from '../redux/theme/themeSlice.js';
 import { signoutSuccess } from '../redux/user/userSlice';
-import { signOutSuccess as securitySignOutSuccess } from '../redux/securityPersonnelSlice';
 import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Headers() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
-  const { currentPersonnel } = useSelector((state) => state.securityPersonnel);
   const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+
+  const api = API_URL;
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -442,20 +443,7 @@ function Headers() {
     }
   };
 
-  const handleSecuritySignOut = async () => {
-    try {
-      const res = await fetch('/api/security/signout', { method: 'POST' });
-      const data = await res.json();
-      if (!res.ok) {
-        console.log(data.message);
-      } else {
-        dispatch(securitySignOutSuccess());
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
@@ -571,20 +559,18 @@ function Headers() {
             label={
               <Avatar
                 alt="security"
-                img={currentPersonnel.profilePicture}
+              
                 rounded
               />
             }
           >
             <Dropdown.Header>
-              <span className="block text-sm">{currentPersonnel.username}</span>
+              
               <span className="block text-sm font-medium truncate">
                 {currentPersonnel.email}
               </span>
             </Dropdown.Header>
-            <Link to={'/security-dashboard'}>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-            </Link>
+            
             <Dropdown.Divider />
             <Dropdown.Item onClick={handleSecuritySignOut}>Sign Out</Dropdown.Item>
           </Dropdown>
@@ -637,12 +623,7 @@ function Headers() {
           )}
         </Navbar.Link>
 
-        <Navbar.Link
-          active={location.pathname === '/security-sign-in'}
-          as={'div'}
-        >
-          <Link to="/security-sign-in">Security Sign In</Link>
-        </Navbar.Link>
+       
       </Navbar.Collapse>
     </Navbar>
   );

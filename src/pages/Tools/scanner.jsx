@@ -1,153 +1,126 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Scanner() {
-  const [email, setEmail] = useState("");
-  const [emailLinks, setEmailLinks] = useState([]); // Stores links to be scanned
-  const [scanResult, setScanResult] = useState(null);
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+
+export default function BasicVulnerabilityScanner() {
+  const [url, setUrl] = useState('');
+  const [scanResults, setScanResults] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleEmailInput = (e) => setEmail(e.target.value);
-  const handleLinksInput = (e) => setEmailLinks(e.target.value.split(',')); // Comma-separated links
+  const api = API_URL;
 
-  const initiateScan = async () => {
+  const handleScan = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    setScanResult(null);
+    setError('');
+    setScanResults(null);
+
     try {
-      const response = await axios.post("http://localhost:3000/api/scan-email", { email, links: emailLinks });
-      setScanResult(response.data);
-    } catch (error) {
-      console.error("Scan failed:", error);
-      setScanResult({ message: "Error occurred during scanning." });
+      const response = await axios.post(`${api}/scan`, { url });
+      setScanResults(response.data);
+    } catch (err) {
+      setError('An error occurred while scanning the domain.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.header}>Email Vulnerability Scanner</h2>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={handleEmailInput}
-          style={styles.input}
-          required
-        />
-        <textarea
-          placeholder="Enter URLs from the email, separated by commas"
-          value={emailLinks.join(",")}
-          onChange={handleLinksInput}
-          style={styles.textarea}
-        />
-        <button onClick={initiateScan} disabled={loading} style={styles.button}>
-          {loading ? "Scanning..." : "Scan for Vulnerabilities"}
-        </button>
-        {scanResult && (
-          <div style={styles.resultContainer}>
-            <h3 style={styles.resultHeader}>Scan Results</h3>
-            <p style={styles.resultText}>{scanResult.message}</p>
-            {scanResult.safetyStatus && <p style={styles.resultText}>Status: {scanResult.safetyStatus.details}</p>}
-            {scanResult.recoveryStatus && <p style={styles.resultText}>{scanResult.recoveryStatus.status}</p>}
-          </div>
-        )}
+  const renderVulnerabilities = () => {
+    if (!scanResults || !scanResults.vulnerabilities) return null;
+
+    return (
+      <div className="mt-4 p-4 bg-red-100 border border-red-400 rounded">
+        <h3 className="text-lg font-semibold mb-2">Vulnerabilities Detected</h3>
+        <ul className="list-disc pl-5">
+          {scanResults.vulnerabilities.map((vuln, index) => (
+            <li key={index}>{vuln}</li>
+          ))}
+        </ul>
       </div>
+    );
+  };
+
+  const renderSuggestions = () => {
+    if (!scanResults || !scanResults.vulnerabilities) return null;
+
+    const suggestions = {
+      'Missing HSTS header': 'Implement HTTP Strict Transport Security (HSTS) to enforce HTTPS connections.',
+      'Missing X-Frame-Options header': 'Add X-Frame-Options header to prevent clickjacking attacks.',
+      'Missing X-XSS-Protection header': 'Enable X-XSS-Protection header to activate browser\'s XSS filter.',
+      'Missing Content Security Policy': 'Implement a Content Security Policy to mitigate XSS and injection attacks.',
+    };
+
+    return (
+      <div className="mt-4 p-4 bg-green-100 border border-green-400 rounded">
+        <h3 className="text-lg font-semibold mb-2">Security Recommendations</h3>
+        <ul className="list-disc pl-5">
+          {scanResults.vulnerabilities.map((vuln, index) => (
+            <li key={index}>{suggestions[vuln] || `Address the ${vuln} vulnerability.`}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-4 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold mb-4">Basic Domain Vulnerability Scanner</h2>
+      <form onSubmit={handleScan} className="mb-4">
+        <div className="flex">
+          <input
+            type="url"
+            className="flex-grow px-4 py-2 border rounded-l"
+            placeholder="Enter URL (e.g., https://example.com)"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-r"
+            disabled={loading}
+          >
+            {loading ? 'Scanning...' : 'Scan'}
+          </button>
+        </div>
+      </form>
+
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 rounded">
+          <p className="text-red-700">{error}</p>
+        </div>
+      )}
+
+      {scanResults && (
+        <div className="space-y-4">
+          <div className={`p-4 ${scanResults.safeBrowsing === 'Safe' ? 'bg-green-100 border-green-400' : 'bg-red-100 border-red-400'} border rounded`}>
+            <h3 className="text-lg font-semibold mb-2">Google Safe Browsing Status</h3>
+            <p>{scanResults.safeBrowsing === 'Safe' ? 'This domain is not flagged as unsafe.' : 'This domain has been flagged as potentially unsafe.'}</p>
+          </div>
+
+          <div className={`p-4 ${scanResults.ssl.valid ? 'bg-green-100 border-green-400' : 'bg-red-100 border-red-400'} border rounded`}>
+            <h3 className="text-lg font-semibold mb-2">SSL Certificate</h3>
+            <p>
+              {scanResults.ssl.valid 
+                ? `Valid (Expires in ${scanResults.ssl.daysRemaining} days)` 
+                : 'Invalid SSL certificate'}
+            </p>
+          </div>
+
+          <div className="p-4 bg-blue-100 border border-blue-400 rounded">
+            <h3 className="text-lg font-semibold mb-2">DNS Information</h3>
+            <p>IP Address: {scanResults.dns}</p>
+          </div>
+
+          {renderVulnerabilities()}
+          {renderSuggestions()}
+        </div>
+      )}
     </div>
   );
 }
 
-const styles = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: "100vh",
-    padding: "20px",
-    backgroundColor: "#f0f0f0",
-  },
-  card: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    maxWidth: "500px",
-    width: "100%",
-  },
-  header: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: "20px",
-    textAlign: "center",
-  },
-  input: {
-    width: "100%",
-    padding: "12px",
-    marginBottom: "10px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    fontSize: "16px",
-  },
-  textarea: {
-    width: "100%",
-    height: "80px",
-    padding: "12px",
-    marginBottom: "10px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    fontSize: "16px",
-    resize: "none",
-  },
-  button: {
-    width: "100%",
-    padding: "12px",
-    fontSize: "16px",
-    color: "#fff",
-    backgroundColor: "#007bff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
-  buttonHover: {
-    backgroundColor: "#0056b3",
-  },
-  resultContainer: {
-    marginTop: "20px",
-    padding: "15px",
-    borderRadius: "4px",
-    backgroundColor: "#f9f9f9",
-    border: "1px solid #ddd",
-  },
-  resultHeader: {
-    fontSize: "20px",
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: "10px",
-  },
-  resultText: {
-    fontSize: "16px",
-    color: "#666",
-  },
-};
-
-// Media queries for responsiveness
-const mediaQueries = `
-  @media (max-width: 768px) {
-    .card {
-      padding: 15px;
-    }
-    .header {
-      font-size: 20px;
-    }
-    .input,
-    .textarea,
-    .button {
-      font-size: 14px;
-    }
-  }
-`;
-
-export default Scanner;

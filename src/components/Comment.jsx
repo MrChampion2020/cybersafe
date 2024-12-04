@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 
@@ -12,9 +13,12 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
     const [editedContent, setEditedContent] = useState(comment.content);
     const { currentUser } = useSelector((state) => state.user);
     useEffect(() => {
+
+        const api = API_URL;
+
         const getUser = async () => {
             try {
-                const res = await fetch(`/api/user/${comment.userId}`);
+                const res = await fetch(`${api}/api/user/${comment.userId}`);
                 const data = await res.json();
                 if (res.ok) {
                     setUser(data);
@@ -33,7 +37,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
 
     const handleSave = async () => {
         try {
-            const res = await fetch(`/api/comment/editComment/${comment._id}`, {
+            const res = await fetch(`${api}/api/comment/editComment/${comment._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
