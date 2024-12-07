@@ -46,8 +46,9 @@ export default function FooterCom() {
                                 >
                                     Tools
                                 </Footer.Link>
+                                
                                 <Footer.Link
-                                    href='/about'
+                                    href='/'
                                     target='_blank'
                                     rel='noopener noreferrer'
                                 >

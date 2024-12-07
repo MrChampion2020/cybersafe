@@ -808,7 +808,7 @@ function Headers() {
         </Navbar.Link> */}
 <Navbar.Link active={location.pathname === '/Live'} as={'div'}>
   <a 
-    href="http://localhost:5174/" 
+    href="https:/cyberplus.vercel.app/" 
     style={linkStyle} 
     target="_blank" 
     rel="noopener noreferrer"
