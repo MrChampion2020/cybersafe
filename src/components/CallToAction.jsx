@@ -61,7 +61,7 @@ export default function CallToAction() {
           gradientDuoTone="purpleToPink"
           className="rounded-tl-xl rounded-br-xl px-6 py-3 text-lg"
         >
-          <a href="http://localhost:5174/"  target="" rel="noopener noreferrer">
+          <a href="https:/cyberplus.vercel.app"  target="" rel="noopener noreferrer">
 
             Live Now
           </a>
