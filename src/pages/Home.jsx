@@ -60,10 +60,9 @@ function Home() {
 <div className="flex flex-col lg:flex-row gap-6 p-28 px-3 max-w-6xl mx-auto">
       {/* Left Side: Text Section */}
       <div className="flex flex-col gap-6 text-left lg:w-1/2">
-        <h1 className="text-3xl font-bold lg:text-6xl">Welcome to Cyber Safe</h1>
+        <h1 className="text-3xl font-bold lg:text-5xl">Welcome to Cyber Safe</h1>
         <p className="text-gray-500 text-xs sm:text-sm">
-          Here you'll find a variety of articles on topics such as web development,
-          software engineering, and programming languages.
+          Here to inform, empower and provide help to keep you safe online, at work and everywhere.
         </p>
         <Link
           to="/search"
@@ -94,7 +93,8 @@ function Home() {
                 {posts && posts.length > 0 && (
                     <div className='flex flex-col gap-6'>
                         <h2 className='text-2xl font-semibold text-center'>Recent Posts</h2>
-                        <div className='flex flex-wrap gap-4'>
+                        
+                        <div className='flex flex-wrap gap-8'>
                             {posts.map((post) => (
                                 <PostCard key={post._id} post={post} />
                             ))}

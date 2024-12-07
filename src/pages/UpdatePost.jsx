@@ -15,6 +15,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
+const api = API_URL;
+
 
 export default function UpdatePost() {
     const [file, setFile] = useState(null);
@@ -30,7 +32,6 @@ export default function UpdatePost() {
     useEffect(() => {
         try {
 
-            const api = API_URL;
 
             const fetchPost = async () => {
                 const res = await fetch(`${api}/api/post/getposts?postId=${postId}`);
@@ -137,10 +138,10 @@ export default function UpdatePost() {
                         }
                         value={formData.category}
                     >
-                        <option value="uncategorized">Select a category</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="reactjs">React.js</option>
-                        <option value="nextjs">Next.js</option>
+                        <option value="news">News</option>
+                        <option value="Threats">Cyber Threats</option>
+                        <option value="Security Tips">Security Tips</option>
+                        <option value="Tools and Reviews">Tools and Reviews</option>
                     </Select>
                 </div>
                 <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">

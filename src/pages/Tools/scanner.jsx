@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "axios";
+
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -19,7 +20,7 @@ export default function BasicVulnerabilityScanner() {
     setScanResults(null);
 
     try {
-      const response = await axios.post(`${api}/scan`, { url });
+      const response = await axios.post(`${api}/api/scan`, { url });
       setScanResults(response.data);
     } catch (err) {
       setError('An error occurred while scanning the domain.');

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import SecurityPolicy from "./pages/Secpolicy";
 import Trivia from "./pages/Tools/trivia";
 import Scanner from "./pages/Tools/scanner";
 import PasswordGenerator from "./pages/Tools/passgen";
@@ -29,7 +30,8 @@ export default function App() {
       <Headers />
       <Routes>
         <Route path="/" element={<Home />} ></Route>
-        <Route path="/about" element={<About />} ></Route>
+        <Route path="/about" element={<About />} ></Route> 
+        <Route path="/SecurityPolicy" element={<SecurityPolicy />} ></Route> 
         <Route path="/trivia" element={<Trivia />} ></Route>
         <Route path="/url" element={<Url />} ></Route>
         <Route path="/passgen" element={<PasswordGenerator />} ></Route>

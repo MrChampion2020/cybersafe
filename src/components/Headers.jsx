@@ -801,18 +801,35 @@ function Headers() {
           <Link to="/">Home</Link>
         </Navbar.Link>
 
-        <Navbar.Link active={location.pathname === '/Live'} as={'div'}>
+        {/* <Navbar.Link active={location.pathname === '/Live'} as={'div'}>
           <Link to="/chat/:chatId" style={linkStyle}>
             Support
           </Link>
-        </Navbar.Link>
+        </Navbar.Link> */}
+<Navbar.Link active={location.pathname === '/Live'} as={'div'}>
+  <a 
+    href="http://localhost:5174/" 
+    style={linkStyle} 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    Support
+  </a>
+</Navbar.Link>
+
 
         <Navbar.Link active={location.pathname === '/about'} as={'div'}>
-          <Link to="/about">About</Link>
+          <Link to="/about"
+          style={{
+            padding: "0px auto",
+            margin: "2px auto"
+          }}> About</Link>
         </Navbar.Link>
 
+       
+
         <Navbar.Link
-          active={location.pathname === '/projects'}
+          // active={location.pathname === }
           as={'div'}
           style={dropdownStyle}
         >
@@ -829,6 +846,24 @@ function Headers() {
               </Link>
               <Link to="/passgen" style={linkStyle} onClick={closeDropdown}>
                 Password Generator
+              </Link>
+            </div>
+          )}
+        </Navbar.Link>
+
+
+        <Navbar.Link
+          // active={location.pathname === }
+          as={'div'}
+          style={dropdownStyle}
+        >
+          <Link to="#" onClick={toggleDropdown} style={linkStyle}>
+          Services
+          </Link>
+          {isOpen && (
+            <div style={menuStyle}>
+              <Link to="/SecurityPolicy" style={linkStyle} onClick={closeDropdown}>
+              Security Policy
               </Link>
             </div>
           )}

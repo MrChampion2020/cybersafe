@@ -110,11 +110,11 @@ const Url = () => {
       textAlign: "left",
     },
     responsiveContainer: {
-      "@media (min-width: 768px)": {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: "10px",
-      },
+      // "@media (min-width: 768px)": {
+      //   flexDirection: "row",
+      //   alignItems: "center",
+      //   gap: "10px",
+      // },
     },
     responsiveInput: {
       flex: "1",

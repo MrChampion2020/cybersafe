@@ -14,6 +14,8 @@ import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
+const api = API_URL;
+
 
 export default function CreatePost() {
   const [file, setFile] = useState(null);
@@ -60,7 +62,6 @@ export default function CreatePost() {
     }
   };
 
-const api = API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,10 +108,10 @@ const api = API_URL;
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>JavaScript</option>
-            <option value='reactjs'>React.js</option>
-            <option value='nextjs'>Next.js</option>
+            <option value='news'>News</option>
+            <option value='Threats'>Threats</option>
+            <option value='Security Tips'>Security Tips</option>
+            <option value='Tools and Reviews'>Tools and Reviews</option>
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
